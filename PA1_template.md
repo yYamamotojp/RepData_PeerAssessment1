@@ -5,14 +5,14 @@
 
 ---
 
-1. Load the data
+- Load the data
 
 
 ```r
 df = read.csv('activity.csv', header=T)
 ```
 
-2. Process/transform the data
+- Process/transform the data
 
 
 ```r
@@ -24,14 +24,14 @@ df$date <- as.Date(df$date)
 
 ---
 
-1. Calculate the total number of steps taken per day
+- Calculate the total number of steps taken per day
 
 
 ```r
 total.steps.by.day <- aggregate(x=df$steps, by=list(df$date), FUN=sum, na.rm=T)
 ```
 
-2. I do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day
+- I do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day
 
 
 ```r
@@ -46,7 +46,7 @@ histplot
 
 ![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
 
-3. Calculate and report the mean and median of the total number of steps taken per day
+- Calculate and report the mean and median of the total number of steps taken per day
 
 
 ```r
@@ -70,7 +70,7 @@ median(total.steps.by.day$steps, na.rm=T)
 
 ---
 
-1. Make a time series plot of the 5-minute interval and the average number of steps token, averaged across all days.
+- Make a time series plot of the 5-minute interval and the average number of steps token, averaged across all days.
 
 
 ```r
@@ -85,7 +85,7 @@ avg.step.line
 
 ![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
 
-2. 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
+- 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps.
 
 
 ```r
@@ -100,7 +100,8 @@ avg.steps.by.interval[which.max(avg.steps.by.interval$steps), c("interval")]
 
 ---
 
-1. Calculate and report the total number of missing values in the dataset.
+- Calculate and report the total number of missing values in the dataset.
+
 
 ```r
 nrow(df[is.na(df$steps),])
@@ -110,14 +111,16 @@ nrow(df[is.na(df$steps),])
 ## [1] 2304
 ```
 
-2. Devise a strategy for filling in all of the missing values in the dataset.
+- Devise a strategy for filling in all of the missing values in the dataset.
+
 
 ```r
 df.imputed <- merge(x=df, y=avg.steps.by.interval, by="interval", all.x=T)
 df.imputed[is.na(df.imputed$steps.x), c("steps.x")] <- df.imputed[is.na(df.imputed$steps.x), c("steps.y")]
 ```
 
-3. Create a new dataset that is equal to the original dataset but with the missing data filled in.
+- Create a new dataset that is equal to the original dataset but with the missing data filled in.
+
 
 ```r
 df.imputed$date <- as.Date(df.imputed$date)
@@ -128,7 +131,7 @@ df.imputed$steps.x <- NULL
 df.imputed$steps.y <- NULL
 ```
 
-4. Make a histogram of the total number of steps taken each day and Calculate and reprot the mean and median total number of steps taken per day.
+- Make a histogram of the total number of steps taken each day and Calculate and reprot the mean and median total number of steps taken per day.
 
 
 ```r
@@ -164,7 +167,8 @@ median(total.steps.by.day$steps, na.rm=T)
 ## Are there differences in activity patterns between weekdays and weekends?
 
 ---
-1. Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
+
+- Create a new factor variable in the dataset with two levels - "weekday" and "weekend" indicating whether a given date is a weekday or weekend day.
 
 
 ```r
@@ -186,7 +190,7 @@ table(df.imputed$weekday)
 ##   12960    4608
 ```
 
-2. Make a panel plot containing a time series plot of the 5-minute interval and the average number of steps taken, averaged across all weekday days or weekend days.
+- Make a panel plot containing a time series plot of the 5-minute interval and the average number of steps taken, averaged across all weekday days or weekend days.
 
 
 ```r
@@ -201,5 +205,3 @@ avg.step.line
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-14-1.png) 
-
-
