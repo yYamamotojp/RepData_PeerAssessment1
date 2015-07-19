@@ -7,11 +7,13 @@
 
 1. Load the data
 
+
 ```r
 df = read.csv('activity.csv', header=T)
 ```
 
 2. Process/transform the data
+
 
 ```r
 df$date <- as.Date(df$date)
@@ -23,6 +25,7 @@ df$date <- as.Date(df$date)
 ---
 
 1. Calculate the total number of steps taken per day
+
 
 ```r
 total.steps.by.day <- aggregate(x=df$steps, by=list(df$date), FUN=sum, na.rm=T)
@@ -44,6 +47,7 @@ histplot
 ![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
 
 3. Calculate and report the mean and median of the total number of steps taken per day
+
 
 ```r
 mean(total.steps.by.day$steps, na.rm=T)
